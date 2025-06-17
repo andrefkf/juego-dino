@@ -3,7 +3,6 @@ import sys
 import random
 import time
 
-# Inicializar
 pygame.init()
 ANCHO, ALTO = 800, 300
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
@@ -11,12 +10,10 @@ pygame.display.set_caption("Dino sin Internet")
 fuente = pygame.font.SysFont("Courier", 24)
 reloj = pygame.time.Clock()
 
-# Colores
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
 GRIS = (120, 120, 120)
 
-# Suelo
 SUELO_Y = 250
 
 def mostrar_texto(texto, x, y, centrado=False):
@@ -119,7 +116,6 @@ def jugar():
             vel_salto = -15
             en_suelo = False
 
-        # Movimiento del dino
         vel_salto += 1
         dino.y += vel_salto
         if dino.y >= SUELO_Y - 40:
@@ -127,7 +123,6 @@ def jugar():
             en_suelo = True
             vel_salto = 0
 
-        # Obstáculos
         for obs in list(obstaculos):
             obs.x -= velocidad
             pygame.draw.rect(pantalla, NEGRO, obs)
@@ -137,24 +132,20 @@ def jugar():
             if dino.colliderect(obs):
                 return puntos, tiempo_actual
 
-        # Suelo animado
         for linea in suelo_lineas:
             linea.x -= velocidad
             if linea.right < 0:
                 linea.x = ANCHO
             pygame.draw.rect(pantalla, GRIS, linea)
 
-        # Dibujar dino
         pygame.draw.rect(pantalla, NEGRO, dino)
 
-        # Puntuación y tiempo
         mostrar_texto(f"Puntos: {puntos}", 10, 10)
         mostrar_texto(f"Tiempo: {tiempo_actual:.2f}s", 10, 40)
 
         pygame.display.flip()
         reloj.tick(60)
 
-# Loop principal
 while True:
     opcion = menu()
     if opcion == "Jugar":
